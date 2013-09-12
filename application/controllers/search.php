@@ -29,14 +29,23 @@ class Search extends CI_Controller {
 	 */
 	public function get_all_places_v1() {
 		try {
-			$data = $this->PLACE->get_all_places_v1();
-
-			 $map_id_data = array();
-			foreach ($data as $value){
+			
+			$place_data = $this->PLACE->get_all_places_v1();
+			$map_id_data = array();
+			foreach ($place_data as $value){
 				$id = $value['id'];
 				$map_id_data[$id] = $value;
 			}
-			echo json_encode($map_id_data);
+
+			// Merging into a single callback for getting all place data as well as place types data
+			$place_types = $this->PLACE->get_all_place_types();
+
+			$return = array(
+				'places_map' => $map_id_data,
+				'place_types' => $place_types,
+				);
+
+			echo json_encode($return);
 		} catch(Exception $e){
 			redirect('/404');
 		}

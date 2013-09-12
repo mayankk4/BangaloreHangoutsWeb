@@ -4,6 +4,7 @@ class Place_Model extends CI_Model{
 
     private $place_table_name = 'place_details';
     private $nearby_places_table_name = 'nearby_places';
+    private $place_type_view_name = 'place_types';
 
     function __construct(){
         parent::__construct();
@@ -19,6 +20,19 @@ class Place_Model extends CI_Model{
         $this->db->order_by("distance"); 
 
         $query = $this->db->get($this->place_table_name);
+
+        $return = array();
+
+        if($query->num_rows() == 0){ // no result
+        }else{ // multiple rows
+            $return = $query->result_array();
+        }
+        return $return;
+    }
+
+    function get_all_place_types() {
+
+        $query = $this->db->get($this->place_type_view_name);
 
         $return = array();
 
