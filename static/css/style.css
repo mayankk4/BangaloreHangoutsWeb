@@ -1086,3 +1086,28 @@ footer p {
 	@media only screen  and (min-width : 1224px) {
 /* Styles */
 	}
+
+
+/********************************************************************************/
+/********************************************************************************/
+/******************************** My Styles *************************************/
+/********************************************************************************/
+/********************************************************************************/
+
+
+#filter-wrap {
+	width: 100%;
+	background: url(../img/top-bg.jpg) #0b333f no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	;
+	min-height: 60px;
+	margin-top: 18px;
+/*	padding-top:160px;
+	text-align:center;
+*/}
+
+
+

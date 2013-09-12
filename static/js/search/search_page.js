@@ -12,14 +12,14 @@ var places_data = {};
 var place_types = new Array();
 
 var current_filters = {};
-current_filters['filter_by_current_distance_from_bangalore'] = false;
+current_filters['filter_by_current_distance_from_bangalore'] = true; // enabled default
 current_filters['filter_by_place_type'] = false;
 current_filters['filter_by_rating'] = false;
 current_filters['filter_by_days_required'] = false;
 current_filters['filter_by_best_time_to_visit'] = false;
 
 // VARIABLES USED FOR SETTING CURRENT FILTERS
-var filter_distance = 10000; // kms
+var filter_distance = 600; // kms
 var filter_place_type = place_types; // initially everything will be selected
 var filter_rating_min = 0; // means 0 and above (all) ratings to be shown initially
 var filter_days_required_max = 10; // means all shown initially
@@ -43,9 +43,10 @@ var filter_current_month = d.getMonth() + 1;
 // This is called whenever we relax a filter
 // This may lead to additional places becoming visible in the UI
 function filter_relaxed() {
-	for (var id in hidden_place_ids) {
+	for (var key in hidden_place_ids) {
+		var id = hidden_place_ids[key];
 		if (
-			!current_filters['filter_by_current_distance_from_bangalore'] || (current_filters['filter_by_current_distance_from_bangalore'] && isCurrentIdAllowedByDistanceFilter(id))
+			(!current_filters['filter_by_current_distance_from_bangalore'] || (current_filters['filter_by_current_distance_from_bangalore'] && isCurrentIdAllowedByDistanceFilter(id)))
 			&& (!current_filters['filter_by_place_type'] || (current_filters['filter_by_place_type'] && isCurrentIdAllowedByTypeFilter(id)))
 			&& (!current_filters['filter_by_rating'] || (current_filters['filter_by_rating'] && isCurrentIdAllowedByRatingFilter(id)))
 			&& (!current_filters['filter_by_days_required'] || (current_filters['filter_by_days_required'] && isCurrentIdAllowedByDaysRequiredFilter(id)))
@@ -59,9 +60,10 @@ function filter_relaxed() {
 // This is called whenever we restrict a filter
 // This may lead to visible places becoming hidden in the UI
 function filter_restricted() {
-	for (var id in visible_place_ids) {
+	for (var key in visible_place_ids) {
+		var id = visible_place_ids[key];
 		if (
-			!current_filters['filter_by_current_distance_from_bangalore'] || (current_filters['filter_by_current_distance_from_bangalore'] && !isCurrentIdAllowedByDistanceFilter(id))
+			(!current_filters['filter_by_current_distance_from_bangalore'] || (current_filters['filter_by_current_distance_from_bangalore'] && !isCurrentIdAllowedByDistanceFilter(id)))
 			&& (!current_filters['filter_by_place_type'] || (current_filters['filter_by_place_type'] && !isCurrentIdAllowedByTypeFilter(id)))
 			&& (!current_filters['filter_by_rating'] || (current_filters['filter_by_rating'] && !isCurrentIdAllowedByRatingFilter(id)))
 			&& (!current_filters['filter_by_days_required'] || (current_filters['filter_by_days_required'] && !isCurrentIdAllowedByDaysRequiredFilter(id)))
@@ -74,7 +76,7 @@ function filter_restricted() {
 
 // returns boolean
 function isCurrentIdAllowedByDistanceFilter(id) {
-	return (filter_distance <= places_data[id].distance);
+	return (filter_distance >= places_data[id].distance);
 }
 
 // returns boolean
@@ -84,12 +86,12 @@ function isCurrentIdAllowedByTypeFilter(id) {
 
 // returns boolean
 function isCurrentIdAllowedByRatingFilter(id) {
-	return (filter_rating_min >= places_data[id].rating);
+	return (filter_rating_min <= places_data[id].rating);
 }
 
 // returns boolean
 function isCurrentIdAllowedByDaysRequiredFilter(id) {
-	return (filter_days_required_max <= places_data[id].days_reqd);
+	return (filter_days_required_max >= places_data[id].days_reqd);
 }
 
 // returns boolean
@@ -128,12 +130,13 @@ function onFilterDistanceChange(new_filter_distance) {
 	if (parseInt(new_filter_distance) > filter_distance) {
 		filter_distance = parseInt(new_filter_distance);
 		filter_relaxed();
-	} else if (new_filter_distance <= filter_distance) {
+	} else if (parseInt(new_filter_distance) <= filter_distance) {
 		filter_distance = parseInt(new_filter_distance);
 		filter_restricted();
 	}
 }
 
+// param string
 function onFilterPlaceTypeAddChange(new_filter_place_type_to_add) {
 	current_filters['filter_by_place_type'] = true;
 	// verify that passed filter place type is in the source of truth
@@ -251,11 +254,17 @@ function onFilterBestTimeToVisitDisabled() {
 /////////////////////////////// Helper functions ////////////////////////////////////
 
  function hide_place (id) {
-
+ 	hidden_place_ids.push(id);
+	var index = visible_place_ids.indexOf(id);
+	visible_place_ids.splice(index, 1);
+ 	$('#' + id).hide();
  }
 
  function show_place (id) {
-
+ 	visible_place_ids.push(id);
+	var index = hidden_place_ids.indexOf(id);
+	hidden_place_ids.splice(index, 1);
+ 	$('#' + id).show();
  }
 
 /////////////////////////////// On Ready ////////////////////////////////////
@@ -323,7 +332,7 @@ $(document).ready(function(){
 	              + "Days Required : "
 	              + current_data.days_reqd
 	              + "</p>"
-	              + "<a href='/place?q=1' class='more-link'>read more</a> </div>"
+	              + "<a href='/place/details/" + current_data.id + "' class='more-link'>read more</a> </div>"
 	              + "</div>"
 	              + "</article>";
 
