@@ -17,7 +17,7 @@
     <div class="footer-wrapper">
       <div class="container">
         <footer>
-          <small>&copy; 2013 - 88 Cordials - All rights reserved.</small>
+          <small>&copy; <?php echo date("Y"); ?> - <a href="http://88cordials.com/" target="_blank">88 Cordials</a> - All rights reserved.</small>
         </footer>
       </div>
     </div>

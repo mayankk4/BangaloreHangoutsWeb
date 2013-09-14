@@ -29,7 +29,6 @@ class Search extends CI_Controller {
 	 */
 	public function get_all_places_v1() {
 		try {
-			
 			$place_data = $this->PLACE->get_all_places_v1();
 			$map_id_data = array();
 			foreach ($place_data as $value){

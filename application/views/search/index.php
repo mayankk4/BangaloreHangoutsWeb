@@ -6,7 +6,7 @@
 
 <?php $this->load->view("/elements/filter") ?>
 
-<!--
+<!-- JSON DATA -
   {'rating': 4, 'direction': 'Mysore +', 'lodge_rating': '7', 'road_quality': 'GOOD', 'description': '',
    'title': 'Bandipur', 'days_reqd': '2', 'best_time_to': 'Jun', 'p2_dist': ['20', '20'],
    'nearest_petrol_pump': 'Gundlupet', 'p2_ids': ['30', '31'], 'food_rating': '7', 'food_available': 'YES',
@@ -16,14 +16,16 @@
 
     <!--******************** News Section ********************-->
     <section id="news" class="single-page scrollblock">
-      <div class="container" id="filter_results_container">
+      <div class="container" >
         <!-- div class="align"><i class="icon-pencil-circled"></i></div -->
-        <h1>Awesome places to visit over the weekend go here ...</h1>
+        <h1>Where are you going this weekend ?</h1>
+        <h2>Showing <span id="number-of-results">108</span> results...</h2>
+
+         <div class="row" id="filter_results_container">
+
         <!-- Three columns -->
 
 <!-- FOR TESTING CARD UI (CARDS COME HERE)
-
-         <div class="row">
 
           <article class="span4 post"> 
           	<div style="background-color:#0b333f;text-align: center;">
@@ -43,12 +45,13 @@
                 <a href="#" class="more-link">read more</a> </div>
             </div>
           </article>
-
-        </div> 
 -->
 
-        <!--a href="#" class="btn btn-large">Go to our blog</a> </div -->
+        </div> 
 
+
+        <!--a href="#" class="btn btn-large">Go to our blog</a> </div -->
+      </div>
     </section>
     <hr>
 
