@@ -15,4 +15,9 @@
         });
     </script>
 
+    <section id="news" class="single-page scrollblock">
+		<img src="http://maps.googleapis.com/maps/api/staticmap
+			?center=-15.800513,-47.91378&zoom=11&size=200x200&sensor=false">
+	</section>
+
 <?php $this->load->view("/elements/footer"); ?>

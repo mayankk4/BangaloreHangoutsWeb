@@ -363,6 +363,31 @@ function onFilterBestTimeToVisitDisabled() {
  	$('#' + id).show();
  }
 
+  function sliceToNearestSpace (inpStr, size){
+  	   if (inpStr == '' || inpStr == null) {
+  			return '';
+  	   }
+       var toLong = inpStr.length>size;
+       var s_ = toLong ? inpStr.substr(0,size-1) : inpStr;
+       s_ = toLong ? s_.substr(0,s_.lastIndexOf(' ')) : s_;
+       return toLong ? s_ + ' ...' : s_;
+  }
+
+  function getRatingStarsHtml(rating) {
+  	var html = "<div>";
+  	var count = 0;
+  	for (var i = 0; i < rating; i++) {
+	  	html = html + "<img src='/static/img/star-full.png'>";
+	  	count++;
+  	}
+  	while (count < 5 ) {
+	  	html = html + "<img src='/static/img/no-star.png'>";
+	  	count++;
+  	}
+  	html = html + "</div>";
+  	return html;
+  }
+
 /////////////////////////////// On Ready ////////////////////////////////////
 
 // Load all the palces (and place types) on DOM ready =>
@@ -412,17 +437,20 @@ $(document).ready(function(){
 	          card_html = card_html
 	              + "<article class='span4 post' id='"
 	              + current_data.id
-	              + "' style='margin-bottom:20px;'>"
+	              + "' style='margin-bottom:20px; height:682px; '>"
 	              + "<div style='background-color:#0b333f;text-align: center;'>"
+	              + "<a href='/place/details/" + current_data.id + "' target='_blank'>"
 	              + "<h2 style='margin: 0 auto; color:#f0bf00; padding: 10px 0 10px 0; font-size:30px;'>"
 	              + current_data.title
-	              + "</h2>"
+	              + "</h2> </a>"
 	              + "</div>"
-	              + "<img class='img-news' src='/static/img/poi/bandipur.png' alt=''>"
+	              + "<div style='text-align:center;'> <img class='img-news' style='height:245px;' src='"
+	              + current_data.img_url
+	              + "' alt=''></div>"
 	              + "<div class='inside'>"
-	              + "<p class='post-date'><i class='icon-calendar'></i> Overall Rating : "
-	              + Math.floor(current_data.rating)
-	              + " / 5</p>"
+	              + "<p class='post-date'>"
+	              + getRatingStarsHtml(Math.floor(current_data.rating))
+	              + "</p>"
 	              + "<h2>"
 	              + current_data.type
 	              + "</h2>"
@@ -435,7 +463,11 @@ $(document).ready(function(){
 	              + "Days Required : "
 	              + current_data.days_reqd
 	              + "</p>"
-	              + "<a href='/place/details/" + current_data.id + "' class='more-link'>read more</a> </div>"
+	              + "<p>"
+	              + sliceToNearestSpace(current_data.description_full,150)
+	              + "</p>"
+  	              // + "<a href='" + current_data.description_full_src + "' class='more-link'>read more</a>"
+	              + "<a href='/place/details/" + current_data.id + "' target='_blank' class='more-link'>read more</a> </div>"
 	              + "</div>"
 	              + "</article>";
 

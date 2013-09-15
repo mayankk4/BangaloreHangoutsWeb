@@ -16,7 +16,9 @@ class Place_Model extends CI_Model{
     // Returns all places with limited metadata sorted by distance
     function get_all_places_v1(){
 
-        $this->db->select('id, title, rating, type, distance, days_reqd, visit_to_month, visit_from_month');
+        $this->db->select('id, title, rating, type, distance,
+            img_url, description_full, description_full_src,
+            days_reqd, visit_to_month, visit_from_month');
         $this->db->order_by("distance");
 
         $query = $this->db->get($this->place_table_name);
