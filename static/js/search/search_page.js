@@ -439,10 +439,9 @@ $(document).ready(function(){
 	              + current_data.id
 	              + "' style='margin-bottom:20px; height:682px; '>"
 	              + "<div style='background-color:#0b333f;text-align: center;'>"
-	              + "<a href='/place/details/" + current_data.id + "' target='_blank'>"
 	              + "<h2 style='margin: 0 auto; color:#f0bf00; padding: 10px 0 10px 0; font-size:30px;'>"
 	              + current_data.title
-	              + "</h2> </a>"
+	              + "</h2>"
 	              + "</div>"
 	              + "<div style='text-align:center;'> <img class='img-news' style='height:245px;' src='"
 	              + current_data.img_url

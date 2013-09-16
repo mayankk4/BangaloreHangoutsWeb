@@ -7,17 +7,23 @@
           $(document).ready(function(){
             
             // Pretty Photo
-            $("a[rel^='prettyPhoto']").prettyPhoto();
+            // $("a[rel^='prettyPhoto']").prettyPhoto();
 
             // do stuff here
-            console.log('<?php echo $id ?>');
+            // console.log('<?php echo $id ?>');
+                // $.ajax({
+                //   url: "/place/get_all_places_v1",
+                //   type: "GET",
+                //   success: function(data){
+                //     var json_data = JSON.parse(data);
 
         });
     </script>
 
-    <section id="news" class="single-page scrollblock">
-		<img src="http://maps.googleapis.com/maps/api/staticmap
-			?center=-15.800513,-47.91378&zoom=11&size=200x200&sensor=false">
+    <section id="news" class="single-page scrollblock" style="margin-left:50px;">
+
+        <?php print_r($place_data[0]) ?>
+
 	</section>
 
 <?php $this->load->view("/elements/footer"); ?>

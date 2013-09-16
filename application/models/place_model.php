@@ -32,6 +32,27 @@ class Place_Model extends CI_Model{
         return $return;
     }
 
+    // Returns all places with limited metadata sorted by distance
+    function get_place_detail($id){
+
+        $this->db->select('id, title, rating, type, distance,
+            img_url, description_full, description_full_src,
+            days_reqd, visit_to_month, visit_from_month');
+
+
+        $this->db->order_by("distance");
+
+        $query = $this->db->get_where($this->place_table_name, array('id' => $id));
+
+        $return = array();
+
+        if($query->num_rows() == 0){ // no result
+        }else{ // multiple rows
+            $return = $query->result_array();
+        }
+        return $return;
+    }
+
     function get_all_place_types() {
 
         $query = $this->db->get($this->place_type_view_name);
